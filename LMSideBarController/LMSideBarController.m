@@ -154,16 +154,24 @@
     
     // Add the new one
     [self.menuViewControllers setObject:menuViewController forKey:@(direction)];
+    
+    // Get style for direction, use menuWidth as SideBar width
+    // Default to 75% view width
+    LMSideBarStyle *style = [self styleForDirection:direction];
+    CGFloat width = style.menuWidth;
+    if(width == 0){
+        width = self.view.bounds.size.width * 3.0/4.0;
+    }
     if (direction == LMSideBarControllerDirectionLeft) {
-        [self setupViewController:menuViewController frame:CGRectMake(-self.view.bounds.size.width,
+        [self setupViewController:menuViewController frame:CGRectMake(-width,
                                                                       0,
-                                                                      self.view.bounds.size.width,
+                                                                      width,
                                                                       self.view.bounds.size.height)];
     }
     else {
         [self setupViewController:menuViewController frame:CGRectMake(self.view.bounds.size.width,
                                                                       0,
-                                                                      self.view.bounds.size.width,
+                                                                      width,
                                                                       self.view.bounds.size.height)];
     }
     menuViewController.view.hidden = YES;
